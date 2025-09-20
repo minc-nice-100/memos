@@ -10,8 +10,24 @@ import { ShortcutServiceDefinition } from "./types/proto/api/v1/shortcut_service
 import { UserServiceDefinition } from "./types/proto/api/v1/user_service";
 import { WorkspaceServiceDefinition } from "./types/proto/api/v1/workspace_service";
 
+// 获取API基础URL，支持环境变量配置
+const getApiBaseUrl = () => {
+  // 在生产环境中，可以通过环境变量配置API地址
+  if (import.meta.env.PROD) {
+    // 如果有配置VITE_API_BASE_URL，则使用它
+    if (import.meta.env.VITE_API_BASE_URL && import.meta.env.VITE_API_BASE_URL !== "/api") {
+      return import.meta.env.VITE_API_BASE_URL;
+    }
+    // 否则使用当前域名
+    return window.location.origin;
+  }
+  // 开发环境使用代理
+  return window.location.origin;
+};
+
+// 创建gRPC通道
 const channel = createChannel(
-  window.location.origin,
+  getApiBaseUrl(),
   FetchTransport({
     credentials: "include",
   }),

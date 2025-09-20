@@ -76,8 +76,7 @@ func NewServer(ctx context.Context, profile *profile.Profile, store *store.Store
 		return c.String(http.StatusOK, "Service ready.")
 	})
 
-	// Serve frontend static files.
-	frontend.NewFrontendService(profile, store).Serve(ctx, echoServer)
+	// Frontend service removed - frontend should be served separately
 
 	rootGroup := echoServer.Group("")
 

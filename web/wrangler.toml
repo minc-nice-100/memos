@@ -1,0 +1,12 @@
+# Wrangler.toml configuration for Cloudflare Pages
+
+[build]
+command = "pnpm build"
+
+[build.environment]
+NODE_VERSION = "18"
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200

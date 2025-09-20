@@ -1,0 +1,43 @@
+version: '3.8'
+
+services:
+  # 后端服务
+  backend:
+    build:
+      context: .
+      dockerfile: server/Dockerfile
+    ports:
+      - "8081:8081"
+    environment:
+      - MODE=dev
+      - DATA=/data/memos.db
+    volumes:
+      - ./data:/data
+    restart: unless-stopped
+
+  # 前端服务（开发模式）
+  frontend-dev:
+    build:
+      context: ./web
+      dockerfile: Dockerfile.dev
+    ports:
+      - "3001:3001"
+    environment:
+      - DEV_PROXY_SERVER=http://backend:8081
+    volumes:
+      - ./web:/app
+      - /app/node_modules
+    restart: unless-stopped
+    depends_on:
+      - backend
+
+  # 前端服务（生产模式）
+  frontend-prod:
+    build:
+      context: ./web
+      dockerfile: Dockerfile.prod
+    ports:
+      - "3000:80"
+    restart: unless-stopped
+    depends_on:
+      - backend
