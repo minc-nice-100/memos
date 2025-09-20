@@ -73,10 +73,6 @@
 - `CLOUDFLARE_API_TOKEN`: Cloudflare API Token
 - `CLOUDFLARE_ACCOUNT_ID`: Cloudflare Account ID
 
-#### Docker 相关
-- `DOCKER_USERNAME`: Docker Hub 用户名
-- `DOCKER_PASSWORD`: Docker Hub 密码
-
 ### 2. 配置 Cloudflare Pages
 
 1. 登录 Cloudflare 控制台
